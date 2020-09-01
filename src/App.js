@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import jwt_decode from 'jwt-decode'
+import axios from 'axios'
 import setAuthToken from './utils/setAuthToken'
 import Register from './components/Register'
 import Login from './components/Login'
 import Profile from './components/Profile'
 import Home from './components/Home'
+import Header from './components/Header'
+import Sidebar from './components/Sidebar'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = localStorage.getItem('jwtToken')
@@ -18,6 +21,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
 export default function App() {
   const [currentUser, setCurrentUser] = useState('')
   const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [projects, setProjects] = useState([])
 
   useEffect(() => {
     let token
@@ -30,6 +34,16 @@ export default function App() {
       setIsAuthenticated(true)
     }
   }, [])
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      axios.get(`${process.env.REACT_APP_API}/projects`)
+      .then(response => {
+        setProjects(response.data)
+      })
+      .catch(err => console.log(err))
+    }
+  }, [isAuthenticated])
 
   let nowCurrentUser = (userData) => {
     setCurrentUser(userData)
@@ -45,11 +59,17 @@ export default function App() {
   }
   
   return (
-    <Switch>
-      <Route path='/register' component={ Register } />
-      <Route path='/login' render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} user={currentUser} /> } />
-      <PrivateRoute path='/profile' component={ Profile } user={currentUser} />
-      <Route path = '/' component={ Home } />
-    </Switch>
+    <>
+      <Header />
+      <main>
+        <Sidebar currentUser={currentUser} handleLogout={handleLogout} isAuthenticated={isAuthenticated} projects={projects} />
+        <Switch>
+          <Route path='/register' component={ Register } />
+          <Route path='/login' render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} user={currentUser} /> } />
+          <PrivateRoute path='/profile' component={ Profile } user={currentUser} />
+          <Route path = '/' component={ Home } />
+        </Switch>
+      </main>
+    </>
   )
 }
