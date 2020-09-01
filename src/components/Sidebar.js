@@ -21,7 +21,7 @@ export default function Sidebar({ currentUser, handleLogout, isAuthenticated, pr
                 :
                     <>
                         <h2>
-                            <Link to='profile'>{currentUser.name}</Link>
+                            <Link to='/profile'>{currentUser.name}</Link>
                         </h2>
                         <button onClick={handleLogout}>Logout</button>
                         {projectList}
