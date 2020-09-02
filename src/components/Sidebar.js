@@ -24,6 +24,7 @@ export default function Sidebar({ currentUser, handleLogout, isAuthenticated, pr
                             <Link to='/profile'>{currentUser.name}</Link>
                         </h2>
                         <button onClick={handleLogout}>Logout</button>
+                        <Link to='/project/create'><h3>+ Create Project</h3></Link>
                         {projectList}
                     </>
             }

@@ -10,6 +10,7 @@ import Home from './components/Home'
 import Header from './components/Header'
 import Sidebar from './components/Sidebar'
 import Project from './components/Project'
+import CreateProject from './components/CreateProject'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const user = localStorage.getItem('jwtToken')
@@ -44,7 +45,7 @@ export default function App() {
       })
       .catch(err => console.log(err))
     }
-  }, [isAuthenticated])
+  }, [isAuthenticated, projects])
 
   let nowCurrentUser = (userData) => {
     setCurrentUser(userData)
@@ -68,6 +69,7 @@ export default function App() {
           <Route path='/register' component={ Register } />
           <Route path='/login' render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} user={currentUser} /> } />
           <PrivateRoute path='/profile' component={ Profile } user={currentUser} />
+          <Route path='/project/create' exact render={ (props) => <CreateProject {...props} projects={projects} /> } />
           <Route path='/project/:id' component={ Project }/>
           <Route path = '/' component={ Home } />
         </Switch>
