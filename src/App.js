@@ -34,7 +34,6 @@ export default function App() {
       setAuthToken(localStorage.jwtToken)
       setCurrentUser(token)
       setIsAuthenticated(true)
-      console.log(currentUser)
     }
   }, [])
 

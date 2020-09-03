@@ -34,6 +34,7 @@ export default function CreateProject({projects, setProjects}) {
                 setProjects([...projects, response.data])
             }
         })
+        .catch(err => console.log(err))
     }
 
     if (projectCreated) {
