@@ -34,18 +34,9 @@ export default function App() {
       setAuthToken(localStorage.jwtToken)
       setCurrentUser(token)
       setIsAuthenticated(true)
+      console.log(currentUser)
     }
   }, [])
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      axios.get(`${process.env.REACT_APP_API}/projects`)
-      .then(response => {
-        setProjects(response.data)
-      })
-      .catch(err => console.log(err))
-    }
-  }, [isAuthenticated, projects])
 
   let nowCurrentUser = (userData) => {
     setCurrentUser(userData)
@@ -59,6 +50,17 @@ export default function App() {
       setIsAuthenticated(false)
     }
   }
+
+  useEffect(() => {
+    axios.get(`${process.env.REACT_APP_API}/projects`)
+    .then(response => {
+      setProjects(response.data)
+    })
+    .catch(err => console.log(err))
+  }, [])
+
+  console.log(JSON.stringify(currentUser))
+  console.log(`Is user authenticated? ${isAuthenticated}`)
   
   return (
     <>
@@ -69,8 +71,8 @@ export default function App() {
           <Route path='/register' component={ Register } />
           <Route path='/login' render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} user={currentUser} /> } />
           <PrivateRoute path='/profile' component={ Profile } user={currentUser} />
-          <Route path='/project/create' exact render={ (props) => <CreateProject {...props} projects={projects} /> } />
-          <Route path='/project/:id' component={ Project }/>
+          <Route path='/project/create' exact render={ (props) => <CreateProject {...props} projects={projects} setProjects={setProjects} /> } />
+          <Route path='/project/:id' render={ (props) => <Project {...props} projects={projects} setProjects={setProjects} /> } />
           <Route path = '/' component={ Home } />
         </Switch>
       </main>

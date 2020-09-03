@@ -4,7 +4,6 @@
 
 main {
   display: flex;
-  height: 100%;
 }
 
 a {
@@ -39,8 +38,8 @@ a {
 /*----- SIDEBAR -----*/
 
 .sidebar {
-  width: 20%;
-  height: 100%;
+  width: 15%;
+  height: 90vh;
   margin: 0;
   padding: 1vh;
   border-right: 1px dashed #6d0606;

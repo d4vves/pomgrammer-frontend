@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 
-export default function CreateProject() {
+export default function CreateProject({projects, setProjects}) {
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [github, setGithub] = useState('')
@@ -31,6 +31,7 @@ export default function CreateProject() {
         .then(response => {
             if (response.status === 200) { 
                 setProjectCreated(true)
+                setProjects([...projects, response.data])
             }
         })
     }
