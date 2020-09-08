@@ -1,7 +1,22 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
+import { select } from 'd3'
 
-export default function Profile({ user }) {
+export default function Profile({ user, projects }) {
+    const svgRef = useRef()
+
+    useEffect(() => {
+        const svg = select(svgRef.current)
+        .attr('class', 'profileSvg')
+
+        
+
+        
+
+    }, [projects])
+
     return (
-        <h1>Hello, {user.name}!</h1>
+        <div className='profileChart'>
+            <svg ref={svgRef}></svg>
+        </div>
     )
 }

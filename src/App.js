@@ -56,10 +56,7 @@ export default function App() {
       setProjects(response.data)
     })
     .catch(err => console.log(err))
-  }, [])
-
-  console.log(JSON.stringify(currentUser))
-  console.log(`Is user authenticated? ${isAuthenticated}`)
+  }, [isAuthenticated])
   
   return (
     <>
@@ -69,7 +66,7 @@ export default function App() {
         <Switch>
           <Route path='/register' component={ Register } />
           <Route path='/login' render={ (props) => <Login {...props} nowCurrentUser={nowCurrentUser} user={currentUser} /> } />
-          <PrivateRoute path='/profile' component={ Profile } user={currentUser} />
+          <PrivateRoute path='/profile' component={ Profile } user={currentUser} projects={projects} />
           <Route path='/project/create' exact render={ (props) => <CreateProject {...props} projects={projects} setProjects={setProjects} /> } />
           <Route path='/project/:id' render={ (props) => <Project {...props} projects={projects} setProjects={setProjects} /> } />
           <Route path = '/' component={ Home } />

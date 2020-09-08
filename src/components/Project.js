@@ -7,6 +7,7 @@ export default function Project({projects, setProjects}) {
     let { id } = useParams()
     const [currentProject, setCurrentProject] = useState('')
     const [projectDeleted, setProjectDeleted] = useState(false)
+    const [currentPoms, setCurrentPoms] = useState([])
     const [showPoms, setShowPoms] = useState(true)
     let pomList
 
@@ -15,10 +16,11 @@ export default function Project({projects, setProjects}) {
         .then(response => {
             if (response.status === 200) {
                 setCurrentProject(response.data)
+                setCurrentPoms(response.data.poms)
             }
         })
         .catch(err => console.log(err))
-    }, [id, showPoms])
+    }, [id, currentPoms])
 
     const deleteProject = () => {
         axios.delete(`${process.env.REACT_APP_API}/projects/${id}`)
@@ -33,20 +35,20 @@ export default function Project({projects, setProjects}) {
     }
 
     if (currentProject) {
-        pomList = currentProject.poms.length < 1 ?
+        pomList = currentPoms.length < 1 ?
             <p>No Poms</p>
         :
-            currentProject.poms.map((pom, i) => {
+            currentPoms.map((pom, i) => {
                 return <p key={i}>{pom.date} - {pom.focus}</p>
             })
     }
 
-    if (projectDeleted) {
-        return <Redirect to={`/profile`} />
-    }
-
     const toggleAdd = () => {
         setShowPoms(false)
+    }
+
+    if (projectDeleted) {
+        return <Redirect to={`/profile`} />
     }
 
     return (
@@ -60,7 +62,7 @@ export default function Project({projects, setProjects}) {
                     {pomList}
                 </div>
             :
-                <Timer id={id} setShowPoms={setShowPoms} currentProject={currentProject} />
+                <Timer id={id} setShowPoms={setShowPoms} currentProject={currentProject} currentPoms={currentPoms} setCurrentPoms={setCurrentPoms} />
             }
         </div>
     )

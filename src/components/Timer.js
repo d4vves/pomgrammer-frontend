@@ -3,10 +3,10 @@ import axios from 'axios'
 import useSound from 'use-sound'
 import Beep from '../utils/beep.mp3'
 
-export default function Timer({id, setShowPoms}) {
+export default function Timer({id, setShowPoms, currentPoms, setCurrentPoms}) {
     const [play] = useSound(Beep)
 
-    let [minutes, setMinutes] = useState(0)
+    let [minutes, setMinutes] = useState(1)
     let [seconds, setSeconds] = useState(5)
     let [breakTime, setBreakTime] = useState(false)
     let [finished, setFinished] = useState(false)
@@ -16,24 +16,28 @@ export default function Timer({id, setShowPoms}) {
     const runTimer = () => {
         if (startTimer) {
             const pomInterval = setInterval(() => {
-                if (seconds > 0) {
+                if (seconds >= 0) {
+                    console.log('DECREMENT SECONDS')
                     setSeconds(seconds -= 1)
                 }
-                if (seconds <= 0) {
-                    if (minutes === 0) {
-                        if (!breakTime) {
-                            setSeconds(3)
-                            setBreakTime(true)
-                            play()
-                        } else {
-                            play()
-                            clearInterval(pomInterval)
-                            setFinished(true)
-                        }
-                    } else {
-                        setMinutes(minutes -= 1)
-                        setSeconds(59)
-                    }
+                if (seconds < 0 && minutes > 0) {
+                    console.log('DECREMENT MINUTES')
+                    setMinutes(minutes -= 1)
+                    seconds = 59
+                    setSeconds(59)
+                }
+                if (seconds < 0 && minutes === 0 && !breakTime) {
+                    console.log('SET BREAK TIMER')
+                    play()
+                    setMinutes(5)
+                    setSeconds(0)
+                    setBreakTime(true)
+                }
+                if (seconds < 0 && minutes === 0 && breakTime) {
+                    console.log('FINISH TIMER')
+                    play()
+                    clearInterval(pomInterval)
+                    setFinished(true)
                 }
             }, 1000)
             return () => {clearInterval(pomInterval)}
@@ -54,6 +58,7 @@ export default function Timer({id, setShowPoms}) {
         axios.post(`${process.env.REACT_APP_API}/poms/${id}`, newPom)
         .then(response => {
             if (response.status === 200) {
+                setCurrentPoms([...currentPoms, newPom])
                 setShowPoms(true)
             }
         })
