@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams, Redirect } from 'react-router-dom'
 import axios from 'axios'
 import Timer from './Timer'
+import Pom from './Pom'
 
 export default function Project({projects, setProjects}) {
     let { id } = useParams()
@@ -9,6 +10,7 @@ export default function Project({projects, setProjects}) {
     const [projectDeleted, setProjectDeleted] = useState(false)
     const [currentPoms, setCurrentPoms] = useState([])
     const [showPoms, setShowPoms] = useState(true)
+    const [editProject, setEditProject] = useState(false)
     let pomList
 
     useEffect(() => {
@@ -39,12 +41,16 @@ export default function Project({projects, setProjects}) {
             <p>No Poms</p>
         :
             currentPoms.map((pom, i) => {
-                return <p key={i}>{pom.date} - {pom.focus}</p>
+                return <Pom key={i} {...pom} currentPoms={currentPoms} setCurrentPoms={setCurrentPoms} />
             })
     }
 
     const toggleAdd = () => {
         setShowPoms(false)
+    }
+
+    const toggleEdit = () => {
+        setEditProject(!editProject)
     }
 
     if (projectDeleted) {
@@ -54,13 +60,23 @@ export default function Project({projects, setProjects}) {
     return (
         <div>
             {showPoms ?
-                <div>
-                    <h1>{currentProject.title}</h1>
-                    <button onClick={deleteProject}>Delete</button>
-                    <p>{currentProject.description}</p>
-                    <button onClick={toggleAdd}>Add Pom</button>
-                    {pomList}
-                </div>
+                    editProject ? 
+                        <div>
+                            <h1>{currentProject.title}</h1>
+                            <p onClick={toggleEdit}>SAVE</p>
+                            <button onClick={deleteProject}>Delete</button>
+                            <p>{currentProject.description}</p>
+                            <button onClick={toggleAdd}>Add Pom</button>
+                            {pomList}
+                        </div>
+                    :
+                        <div>
+                            <h1>{currentProject.title}</h1>
+                            <p onClick={toggleEdit}>EDIT</p>
+                            <p>{currentProject.description}</p>
+                            <button onClick={toggleAdd}>Add Pom</button>
+                            {pomList}
+                        </div>
             :
                 <Timer id={id} setShowPoms={setShowPoms} currentProject={currentProject} currentPoms={currentPoms} setCurrentPoms={setCurrentPoms} />
             }
