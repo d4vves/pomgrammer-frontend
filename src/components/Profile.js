@@ -1,15 +1,17 @@
 import React, { useRef, useEffect } from 'react'
-import { select, forceSimulation, forceManyBody, forceCenter, svg } from 'd3'
+import { select, forceSimulation, forceCenter, forceCollide } from 'd3'
 
-export default function Profile({ user, projects }) {
+export default function Profile({ projects }) {
     const svgRef = useRef()
     const width = 975
     const height = 575
 
     useEffect(() => {
         const simulation = forceSimulation(projects)
-            .force('charge', forceManyBody())
             .force('center', forceCenter(width / 2, height / 2))
+            .force('collide', forceCollide().radius(function(d) {
+                return d.poms.length * 5 + 25
+            }))
             .on('tick', ticked)
         
         function ticked() {
