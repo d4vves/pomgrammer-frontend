@@ -53,9 +53,11 @@ export default function App() {
   useEffect(() => {
     axios.get(`${process.env.REACT_APP_API}/projects`)
     .then(response => {
-      setProjects(response.data)
+      if (response.status === 200) {
+        setProjects(response.data)
+      }
     })
-    .catch(err => console.log(err))
+    .catch(err => console.log(`🚦 ${err} 🚦`))
   }, [isAuthenticated])
   
   return (

@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 import axios from 'axios'
 
-export default function Pom({ _id, date, focus, currentPoms, setCurrentPoms }) {
+export default function Pom({ _id, date, focus, currentPoms, setCurrentPoms, editProject }) {
     let { id } = useParams()
 
     const deletePom = (e) => {
@@ -17,9 +17,17 @@ export default function Pom({ _id, date, focus, currentPoms, setCurrentPoms }) {
     }
 
     return (
-        <div>
-            <p>{`${date} - ${focus}`}</p>
-            <button onClick={deletePom}>Delete POM</button>
-        </div>
+        <>
+        {editProject ? 
+            <div>
+                <p>{`${date} - ${focus}`}</p>
+                <button onClick={deletePom}>Delete POM</button>
+            </div>
+        :
+            <div>
+                <p>{`${date} - ${focus}`}</p>
+            </div>
+        }
+        </>
     )
 }

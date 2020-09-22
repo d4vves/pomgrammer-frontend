@@ -41,7 +41,7 @@ export default function Project({projects, setProjects}) {
             <p>No Poms</p>
         :
             currentPoms.map((pom, i) => {
-                return <Pom key={i} {...pom} currentPoms={currentPoms} setCurrentPoms={setCurrentPoms} />
+                return <Pom key={i} {...pom} currentPoms={currentPoms} setCurrentPoms={setCurrentPoms} editProject={editProject} />
             })
     }
 
