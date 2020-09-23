@@ -65,24 +65,24 @@ export default function Timer({id, setShowPoms, currentPoms, setCurrentPoms}) {
     }
 
     return (
-        <div>
+        <div className='timerContainer'>
             {
                 !finished ? 
                     !breakTime ?
                         <div>
                             <h1>Let 'er rip!</h1>
-                            <h1>Time Remaining: {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+                            <h1 className='timerText'>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
                             <button onClick={enableTimer}>Start</button>
                         </div>
                     :
                         <div>
-                            <h1>Break time!</h1>
-                            <h1>Time Remaining: {minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
+                            <h1>Take a break!</h1>
+                            <h1 className='timerText'>{minutes < 10 ? `0${minutes}` : minutes}:{seconds < 10 ? `0${seconds}` : seconds}</h1>
                         </div>
                 :
                     <div>
                         <h1>Great job!</h1>
-                        <form onSubmit={addPom}>
+                        <form onSubmit={addPom} className='timerSubmit'>
                             <label htmlFor='focus'>What did you focus on? </label>
                             <input type='text' name='focus' id='focus' onChange={handleFocus} />
                             <input type='submit' value='add pom' />

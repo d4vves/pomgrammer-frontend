@@ -58,7 +58,7 @@ export default function App() {
       }
     })
     .catch(err => console.log(`🚦 ${err} 🚦`))
-  }, [isAuthenticated])
+  }, [isAuthenticated, projects])
   
   return (
     <>

@@ -3,10 +3,11 @@ import { select, forceSimulation, forceCenter, forceCollide } from 'd3'
 
 export default function Profile({ projects }) {
     const svgRef = useRef()
-    const width = 975
-    const height = 575
 
     useEffect(() => {
+        let width = 950
+        let height = 500
+
         const simulation = forceSimulation(projects)
             .force('center', forceCenter(width / 2, height / 2))
             .force('collide', forceCollide().radius(function(d) {

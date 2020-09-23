@@ -11,6 +11,8 @@ export default function Project({projects, setProjects}) {
     const [currentPoms, setCurrentPoms] = useState([])
     const [showPoms, setShowPoms] = useState(true)
     const [editProject, setEditProject] = useState(false)
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
     let pomList
 
     useEffect(() => {
@@ -53,26 +55,57 @@ export default function Project({projects, setProjects}) {
         setEditProject(!editProject)
     }
 
+    const handleTitle = (e) => {
+        setTitle(e.target.value)
+    }
+
+    const handleDescription = (e) => {
+        setDescription(e.target.value)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        const updatedProject = {
+            title: !title ? currentProject.title : title,
+            description: !description ? currentProject.description : description
+        }
+        axios.put(`${process.env.REACT_APP_API}/projects/${id}`, updatedProject)
+        .then(response => {
+            projects.forEach(project => {
+                if (project._id === response.data._id) {
+                    project.title = response.data.title
+                    project.description = response.data.description
+                }
+            })
+            setProjects(projects)
+            toggleEdit()
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
+
     if (projectDeleted) {
         return <Redirect to={`/profile`} />
     }
 
     return (
-        <div>
+        <>
             {showPoms ?
                     editProject ? 
-                        <div>
-                            <h1>{currentProject.title}</h1>
-                            <p onClick={toggleEdit}>SAVE</p>
-                            <button onClick={deleteProject}>Delete</button>
-                            <p>{currentProject.description}</p>
-                            <button onClick={toggleAdd}>Add Pom</button>
+                        <div className='projectContainer'>
+                            <form className='projectForm'>
+                                <input className='titleInput' type='text' placeholder={currentProject.title} onChange={handleTitle} />
+                                <button onClick={handleSubmit}>save</button>
+                                <button onClick={deleteProject}>Delete Project</button>
+                                <input className='descriptionInput' type='text' placeholder={currentProject.description} onChange={handleDescription}/>
+                            </form>
                             {pomList}
                         </div>
                     :
-                        <div>
-                            <h1>{currentProject.title}</h1>
-                            <p onClick={toggleEdit}>EDIT</p>
+                        <div className='projectContainer'>
+                            <h1 className='projectTitle'>{currentProject.title}</h1>
+                            <button onClick={toggleEdit}>edit</button>
                             <p>{currentProject.description}</p>
                             <button onClick={toggleAdd}>Add Pom</button>
                             {pomList}
@@ -80,6 +113,6 @@ export default function Project({projects, setProjects}) {
             :
                 <Timer id={id} setShowPoms={setShowPoms} currentProject={currentProject} currentPoms={currentPoms} setCurrentPoms={setCurrentPoms} />
             }
-        </div>
+        </>
     )
 }
