@@ -24,16 +24,17 @@ export default function Project({projects, setProjects}) {
             }
         })
         .catch(err => console.log(err))
-    }, [id, currentPoms])
+    }, [id])
 
-    const deleteProject = () => {
+    const deleteProject = (e) => {
+        e.preventDefault()
         axios.delete(`${process.env.REACT_APP_API}/projects/${id}`)
         .then(response => {
             if (response.status === 200) {
                 let newProjects = projects.filter(project => project._id !== currentProject._id)
                 setProjects(newProjects)
-                setProjectDeleted(true)
             }
+            setProjectDeleted(true)
         })
         .catch(err => console.log(err))
     }

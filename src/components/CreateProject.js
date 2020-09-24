@@ -43,7 +43,7 @@ export default function CreateProject({projects, setProjects}) {
 
     return (
         <form onSubmit={handleSubmit}>
-            <input type='text' name='title' placeholder='Title' onChange={handleTitle} />
+            <input type='text' name='title' placeholder='Title' onChange={handleTitle} required />
             <input type='text' name='description' placeholder='Description' onChange={handleDescription} />
             <input type='text' name='github' placeholder='Github URL' onChange={handleGithub} />
             <input type='submit' />

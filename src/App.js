@@ -55,10 +55,11 @@ export default function App() {
     .then(response => {
       if (response.status === 200) {
         setProjects(response.data)
+        console.log(`🤡 setProjects!`)
       }
     })
     .catch(err => console.log(`🚦 ${err} 🚦`))
-  }, [isAuthenticated, projects])
+  }, [isAuthenticated])
   
   return (
     <>
