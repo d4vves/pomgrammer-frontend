@@ -24,7 +24,7 @@ export default function Project({projects, setProjects}) {
             }
         })
         .catch(err => console.log(err))
-    }, [id])
+    }, [id, currentPoms])
 
     const deleteProject = (e) => {
         e.preventDefault()
@@ -76,6 +76,7 @@ export default function Project({projects, setProjects}) {
                 if (project._id === response.data._id) {
                     project.title = response.data.title
                     project.description = response.data.description
+                    setCurrentProject(project)
                 }
             })
             setProjects(projects)

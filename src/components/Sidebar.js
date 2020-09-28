@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import SidebarProject from './SidebarProject'
-import '../App.css'
+import '../css/App.css'
 
 export default function Sidebar({ currentUser, handleLogout, isAuthenticated, projects }) {
     let projectList = projects.length < 1 ?

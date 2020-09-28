@@ -1,0 +1,13 @@
+@import './variables';
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap');
+
+.timerContainer {
+    margin: 0 auto;
+    text-align: center;
+    .timerText {
+        font-family: 'Courier Prime', monospace;
+    }
+    .timerSubmit {
+        @include flexBox(column, space-between, center);
+    }
+}

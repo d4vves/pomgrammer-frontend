@@ -1,0 +1,20 @@
+@import './variables';
+
+.projectContainer {
+    width: 100%;
+    .projectTitle {
+        font-size: 10rem;
+        margin: 0;
+    }
+    .projectForm {
+        input {
+            display: block;
+        }
+        .titleInput {
+            width: 100%;
+            border-width: 0px 0px 1px 0px;
+            font-size: 10rem;
+            font-weight: bold;
+        }
+    }
+}

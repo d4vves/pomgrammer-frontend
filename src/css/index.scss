@@ -1,0 +1,17 @@
+@import './variables';
+
+body {
+    margin: 0 auto;
+    font-family: $font-stack;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+form, input {
+    font-family: $font-stack;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}

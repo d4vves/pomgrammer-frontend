@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,400&family=Pacifico&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Courier+Prime&display=swap");
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.header {
+  max-width: 100vw;
+  height: 5vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  padding: 1vh 2vw 1vw 2vw;
+  background-color: #6D0606;
+}
+
+.header .pomLogo {
+  width: 4vmin;
+  fill: #DF5555;
+}
+
+.header h1 {
+  margin: 0;
+  font-family: 'Pacifico', cursive;
+  font-size: 3vmin;
+  color: #DF5555;
+}
+
+.sidebar {
+  width: 15%;
+  height: 90vh;
+  margin: 0;
+  padding: 1vh;
+  border-right: 1px dashed #6D0606;
+}
+
+.profileChart {
+  width: 70%;
+  margin: 2vh auto;
+}
+
+.projectContainer {
+  width: 100%;
+}
+
+.projectContainer .projectTitle {
+  font-size: 10rem;
+  margin: 0;
+}
+
+.projectContainer .projectForm input {
+  display: block;
+}
+
+.projectContainer .projectForm .titleInput {
+  width: 100%;
+  border-width: 0px 0px 1px 0px;
+  font-size: 10rem;
+  font-weight: bold;
+}
+
+.timerContainer {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.timerContainer .timerText {
+  font-family: 'Courier Prime', monospace;
+}
+
+.timerContainer .timerSubmit {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+/*# sourceMappingURL=App.css.map */
